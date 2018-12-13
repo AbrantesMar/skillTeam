@@ -1,0 +1,46 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "v1",
+        "title": "API V1"
+    },
+    "basePath": "/",
+    "paths": {
+        "/api/Employee": {
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "operationId": "ApiTodoGet",
+                "consumes": [],
+                "produces": [
+                    "text/plain",
+                    "application/json",
+                    "text/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Employee"
+                            }
+                        }
+                    }
+                 }
+            }
+        }
+    },
+    "definitions": {
+        "Employee": {
+            "type": "object",
+             "properties": {
+                 "Description": {
+                     "type": "string"
+                 }
+             }
+        }
+    },
+    "securityDefinitions": {}
+ }
