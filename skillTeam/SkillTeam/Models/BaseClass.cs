@@ -1,11 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace SkillTeam.Models
 {
     public class BaseClass
     {
-        public Guid Id { get; set; }
+        [BsonId]
+        public ObjectId Id { get; set; }
         [Required]
         public string Description { get; set; }
     }

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SkillTeam.Models.Repository;
 
 namespace SkillTeam
 {
@@ -20,6 +22,11 @@ namespace SkillTeam
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO: Configuração do mongodb, referencias: http://www.macoratti.net/17/11/aspncore_mongo1.htm
+            DBContext.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+            DBContext.DatabaseName = Configuration.GetSection("MongoConnection:Database").Value;
+            DBContext.IsSSL = Convert.ToBoolean(this.Configuration.GetSection("MongoConnection:IsSSL").Value);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
