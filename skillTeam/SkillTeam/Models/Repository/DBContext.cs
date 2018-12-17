@@ -35,14 +35,16 @@ namespace SkillTeam.Models.Repository
 
         public IMongoCollection<Employee> Employees
         {
-            get {
+            get 
+            {
                 return _database.GetCollection<Employee>("Employees");
             }
         }
 
         public IMongoCollection<Skill> SkillTeam
         {
-            get {
+            get 
+            {
                 return _database.GetCollection<Skill>("Skills");
             }
         }

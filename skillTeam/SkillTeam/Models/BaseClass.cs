@@ -7,8 +7,11 @@ namespace SkillTeam.Models
 {
     public class BaseClass
     {
-        [BsonId]
+
+        [BsonId()]
         public ObjectId Id { get; set; }
+        [BsonElement("description")]
+        [BsonRequired()]
         [Required]
         public string Description { get; set; }
     }

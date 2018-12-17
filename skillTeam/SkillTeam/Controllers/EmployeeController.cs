@@ -7,6 +7,7 @@ using SkillTeam.Models.Repository;
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace SkillTeam.Controllers
 {
@@ -19,7 +20,7 @@ namespace SkillTeam.Controllers
         public async Task<IEnumerable<Employee>> Index()
         {
             DBContext dbContext = new DBContext();
-            var entiry = dbContext.Employees.FindAsync(_ => true);
+            var entiry = await dbContext.Employees.FindAsync(_ => true);
             return entiry.ToList();
         }
 
@@ -27,7 +28,7 @@ namespace SkillTeam.Controllers
         public async void Add(Employee employee)
         {
             DBContext dbContext = new DBContext();
-            employee.Id = Guid.NewGuid();
+            //employee.Id = Guid.NewGuid();
             await dbContext.Employees.InsertOneAsync(employee);
         }
 
@@ -38,13 +39,18 @@ namespace SkillTeam.Controllers
             await dBContext.Employees.DeleteOneAsync(e => e.Id == id);
         }
 
-        public async Task<Employee> Edit(Employee employee)
+        [HttpPost]
+        public async void Edit(Employee employee)
         {
-            if(employee == null)
-                return BadRequest();
             DBContext dbContext = new DBContext();
-            return Ok(await dbContext.Employees.ReplaceOneAsync(e => e.Id == employee.Id, employee));
-            
+            var entity = await dbContext.Employees.ReplaceOneAsync(e => e.Id == employee.Id, employee);
+        }
+
+        public async Task<Employee> FindEmployeeById(ObjectId id)
+        {
+            DBContext context = new DBContext();
+            var entity = await context.Employees.FindAsync(e => e.Id == id);
+            return entity.FirstOrDefault();
         }
 
     }
