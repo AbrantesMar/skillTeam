@@ -24,7 +24,7 @@ namespace SkillTeam.Controllers
             return entiry.ToList();
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async void Add(Employee employee)
         {
             DBContext dbContext = new DBContext();
@@ -32,20 +32,21 @@ namespace SkillTeam.Controllers
             await dbContext.Employees.InsertOneAsync(employee);
         }
 
-        [HttpPost]
+        [HttpPost("delete")]
         public async void Delete(ObjectId id)
         {
             DBContext dBContext = new DBContext();
             await dBContext.Employees.DeleteOneAsync(e => e.Id == id);
         }
 
-        [HttpPost]
+        [HttpPost("edit")]
         public async void Edit(Employee employee)
         {
             DBContext dbContext = new DBContext();
             var entity = await dbContext.Employees.ReplaceOneAsync(e => e.Id == employee.Id, employee);
         }
 
+        [HttpPost("findById")]
         public async Task<Employee> FindEmployeeById(ObjectId id)
         {
             DBContext context = new DBContext();
