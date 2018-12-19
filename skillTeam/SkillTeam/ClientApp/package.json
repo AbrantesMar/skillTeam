@@ -5,6 +5,8 @@
   "dependencies": {
     "bootstrap": "^3.4.0",
     "bower": "^1.8.4",
+    "mobx": "^5.8.0",
+    "mobx-state-tree": "^3.9.0",
     "react": "^16.6.3",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.6.3",
