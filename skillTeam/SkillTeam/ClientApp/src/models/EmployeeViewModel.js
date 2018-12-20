@@ -3,9 +3,17 @@ import { types } from "mobx-state-tree";
 const EmployeeViewModel = types
     .model("EmployeeViewModel", {
         Employees: types.optional(types.array(Employee))
-        , SelectEmployee: types.reference(Employee)
+        , Employee: types.reference(Employee)
     })
-    .actions()
+    .actions(self =>({
+        create(){
+            self.push()
+            /*fetch("api/Employee/employee", {
+                method: "post",
+                body(self.Employee)
+            })*/
+        }
+    }))
     .views()
 
 export default EmployeeViewModel;

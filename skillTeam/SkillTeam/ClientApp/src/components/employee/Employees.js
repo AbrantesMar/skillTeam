@@ -1,13 +1,18 @@
 import React, { Component } from "react";
-import Employee from "../../models/Employee";
+//import Employee from "../../models/Employee";
 
 export class Employees extends Component {
     displayName = Employees.name
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = { employees: [], loading: true };
 
+        fetch('api/Employee')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ employees: data, loading: false });
+            });
     }
 
     static renderEmployeesTable(employees){
@@ -20,8 +25,12 @@ export class Employees extends Component {
                 </thead>
                 <tbody>
                     {employees.map(employee => 
-                        <tr key={employee.Id}>
-                            <td>{employee.Description}</td>
+                        <tr key={employee.id}>
+                            <td>{employee.description}</td>
+                            <td>
+                                <button>Edit</button>
+                                <button>Excluir</button>
+                            </td>
                         </tr>
                     )}
                 </tbody>
@@ -32,7 +41,7 @@ export class Employees extends Component {
     render(){
         let contents = this.state.loading
             ? <p><em>loading...</em></p>
-            : Employee.renderEmployeesTable(this.state.employees);
+            : Employees.renderEmployeesTable(this.state.employees);
         
         return (
             <div>
