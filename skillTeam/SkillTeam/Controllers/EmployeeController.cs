@@ -16,6 +16,14 @@ namespace SkillTeam.Controllers
     [Authorize()]
     public class EmployeeController : Controller
     {
+        private readonly IEmployeeRepository _employeeRepository;
+
+        public EmployeeController(IEmployeeRepository employeeRepository)
+        {
+            _employeeRepository = employeeRepository;
+
+        }
+
         [HttpGet] 
         public async Task<IEnumerable<Employee>> Index()
         {
@@ -35,23 +43,20 @@ namespace SkillTeam.Controllers
         [HttpPost("delete")]
         public async void Delete(ObjectId id)
         {
-            DBContext dBContext = new DBContext();
-            await dBContext.Employees.DeleteOneAsync(e => e.Id == id);
+            _employeeRepository.Delete(id);
+            
         }
 
         [HttpPost("edit")]
         public async void Edit(Employee employee)
         {
-            DBContext dbContext = new DBContext();
-            var entity = await dbContext.Employees.ReplaceOneAsync(e => e.Id == employee.Id, employee);
+            _employeeRepository.Edit(employee);
         }
 
         [HttpPost("findById")]
         public async Task<Employee> FindEmployeeById(ObjectId id)
         {
-            DBContext context = new DBContext();
-            var entity = await context.Employees.FindAsync(e => e.Id == id);
-            return entity.FirstOrDefault();
+            return await _employeeRepository.FindById(id);
         }
 
     }

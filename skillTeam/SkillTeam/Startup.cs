@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SkillTeam.Models.Repository;
+using SkillTeam.Models.Repository.Impl;
 
 namespace SkillTeam
 {
@@ -28,13 +29,19 @@ namespace SkillTeam
             DBContext.IsSSL = Convert.ToBoolean(this.Configuration.GetSection("MongoConnection:IsSSL").Value);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            
+            //TODO: Dependency Injection - referencia: http://www.macoratti.net/17/04/aspcore_di1.htm
+            #region DI
+            services.AddTransient<IEmployeeRepository, EmployeeRepositoryImpl>();
+            #endregion
+            
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-            //TODO: Swagger Config, reference: https://docs.microsoft.com/pt-br/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/data-driven-crud-microservice
+            //TODO: Sagger Config, reference: https://docs.microsoft.com/pt-br/dotnet/standard/microservices-architecture/multi-container-microservice-net-applications/data-driven-crud-microservice
+            #region configSwagger
             services.AddSwaggerGen(options =>
             {
                 options.DescribeAllEnumsAsStrings();
@@ -45,6 +52,7 @@ namespace SkillTeam
                     , TermsOfService = "Open Project"
                 });
             });
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,9 +79,12 @@ namespace SkillTeam
                     template: "{controller}/{action=Index}/{id?}");
             });
             //TODO: Swagger Config - não colocar depois do SPA pq da erro
+            #region Swagger
             app.UseSwagger().UseSwaggerUI(c => {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api SkillTeam");
             });
+            #endregion
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";

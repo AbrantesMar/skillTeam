@@ -8551,3 +8551,8 @@ yarm@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/yarm/-/yarm-0.4.0.tgz#3d9a73abee490ece77c88ebbd0929fea6f72907b"
   integrity sha1-PZpzq+5JDs53yI670JKf6m9ykHs=
+
+yarn@^1.12.3:
+  version "1.12.3"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.12.3.tgz#fb4599bf1f8da01552bcc7e1571dfd4e53788203"
+  integrity sha512-8f5rWNDvkhAmCxmn8C0LsNWMxTYVk4VGKiq0sIB6HGZjaZTHsGIH87SUmVDUEd2Wk54bqKoUlbVWgQFCQhRkVw==
